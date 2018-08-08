@@ -46,39 +46,31 @@ mongoose.connect(MONGODB_URI);
 // A GET route for scraping the nytimes website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  axios.get("https://www.nytimes.com/").then(function(response) {
+  axios.get("https://www.nytimes.com/section/world").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every story class within an article tag, and do the following:
-    $("article.story").each(function(i, element) {
-      // Save an empty result object
+    // Now, we grab every story-body class within the div, and do the following:
+    $("div.story-body").each(function(i, element) {
       var result = {};
-
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
+      var title = $(element)
+        .children("h2.headline")
         .children("a")
         .text();
-      result.link = $(this)
+      var link = $(element)
+        .children("h2.headline")
         .children("a")
         .attr("href");
-
-      result.byline = $(this)
-        .children("p.byline")
-        .text();
-      result.datetime = $(this)
-        .children("time.timestamp")
-        .attr("datetime");
-      result.dataEasternTimestamp = $(this)
-        .children("time.timestamp")
-        .attr("data-eastern-timestamp");
-      result.dataUTCTimestamp = $(this)
-        .children("time.timestamp")
-        .attr("data-utc-timestamp");
-      result.summary = $(this)
+      var summary = $(element)
         .children("p.summary")
         .text();
+      var byline = $(element)
+        .children("p.byline")
+        .text();
+      console.log(
+        " title: " + title + " link: " + link + " summary: " + summary + " byline: "+ byline);
 
+  
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -95,8 +87,6 @@ app.get("/scrape", function(req, res) {
     res.send("Scrape Complete");
   });
 });
-
-
 
 // Listen on the port
 app.listen(PORT, function() {

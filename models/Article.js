@@ -10,35 +10,28 @@ var ArticleSchema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
   },
   // `link` is required and of type String
   link: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
+  },
+   // `summary` is required and of type String
+   summary: {
+    type: String,
+    required: true,
+    trim: true
   },
   // `byline` is of type String
   byline: {
-    type: String
-  },
-  // `datetime` is of type Date
-  datetime: {
-    type : Date, default: Date.now
-  },
-  // `dataEasternTimestamp` is of type Date
-  dataEasternTimestamp: {
-    type : Date, default: Date.now
-  },
-  // `dataUTCTimestamp` is of type Date
-  dataUTCTimestamp: {
-    type : Date, default: Date.now
-  },
-  // `summary` is required and of type String
-  summary: {
     type: String,
-    required: true
+    trim: true
   },
+  
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
   // This allows us to populate the Article with an associated Note
