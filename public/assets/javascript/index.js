@@ -1,12 +1,12 @@
 $(document).ready(function() {
-
-    // Whenever someone clicks a Article Notes button
-$(document).on("click", ".article-notes", function() {
+  // Whenever someone clicks a Article Notes button
+  $(document).on("click", ".article-notes", function() {
+    console.log("Article Notes Button Click Works");
     // Empty the notes from the note section
     $("#notes").empty();
-    // Save the id from the p tag
+    // Save the id from the button which got it from the article id
     var thisId = $(this).attr("data-id");
-  
+
     // Now make an ajax call for the Article
     $.ajax({
       method: "GET",
@@ -22,8 +22,10 @@ $(document).on("click", ".article-notes", function() {
         // A textarea to add a new note body
         $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
         // A button to submit a new note, with the id of the article saved to it
-        $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
-  
+        $("#notes").append(
+          "<button data-id='" + data._id + "' id='savenote'>Save Note</button>"
+        );
+
         // If there's a note in the article
         if (data.note) {
           // Place the title of the note in the title input
@@ -33,12 +35,12 @@ $(document).on("click", ".article-notes", function() {
         }
       });
   });
-  
+
   // When you click the savenote button
   $(document).on("click", "#savenote", function() {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-  
+
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
@@ -57,52 +59,48 @@ $(document).on("click", ".article-notes", function() {
         // Empty the notes section
         $("#notes").empty();
       });
-  
+
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
   });
-  
 
+  //************************************************ */
+  $(".movie-favorite").on("click", function(e) {
+    var movieId = $(this).attr("data-id");
+    $.ajax({
+      url: "/api/movie/" + movieId,
+      method: "PUT",
+      data: {
+        favorite: true
+      }
+    })
+      .then(function(data) {
+        if (data) {
+          window.location.href = "/";
+        }
+      })
+      .catch(function(err) {
+        alert(err);
+      });
+  });
 
-
-
-
-
-
-
-    //************************************************ */
-    $(".movie-favorite").on("click", function(e){
-        var movieId = $(this).attr("data-id");
-        $.ajax({
-            url: "/api/movie/" + movieId,
-            method: "PUT",
-            data: {
-                "favorite": true
-            }
-        }).then(function(data){
-            if(data){
-                window.location.href = '/';
-            }
-        }).catch(function(err){
-            alert(err);
-        });
-    });
-
-    $(".movie-unfavorite").on("click", function(e){
-        var movieId = $(this).attr("data-id");
-        $.ajax({
-            url: "/api/movie/" + movieId,
-            method: "PUT",
-            data: {
-                "favorite": false
-            }
-        }).then(function(data){
-            if(data){
-                window.location.href = '/favorites';
-            }
-        }).catch(function(err){
-            alert(err);
-        });
-    });
+  $(".movie-unfavorite").on("click", function(e) {
+    var movieId = $(this).attr("data-id");
+    $.ajax({
+      url: "/api/movie/" + movieId,
+      method: "PUT",
+      data: {
+        favorite: false
+      }
+    })
+      .then(function(data) {
+        if (data) {
+          window.location.href = "/favorites";
+        }
+      })
+      .catch(function(err) {
+        alert(err);
+      });
+  });
 });
