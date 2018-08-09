@@ -53,24 +53,31 @@ app.get("/scrape", function(req, res) {
     // Now, we grab every story-body class within the div, and do the following:
     $("div.story-body").each(function(i, element) {
       var result = {};
-      var title = $(element)
+      result.title = $(element)
         .children("h2.headline")
         .children("a")
         .text();
-      var link = $(element)
+      result.link = $(element)
         .children("h2.headline")
         .children("a")
         .attr("href");
-      var summary = $(element)
+      result.summary = $(element)
         .children("p.summary")
         .text();
-      var byline = $(element)
+      result.byline = $(element)
         .children("p.byline")
         .text();
-      console.log(
-        " title: " + title + " link: " + link + " summary: " + summary + " byline: "+ byline);
+      // console.log(
+      //   " title: " +
+      //     title +
+      //     " link: " +
+      //     link +
+      //     " summary: " +
+      //     summary +
+      //     " byline: " +
+      //     byline
+      // );
 
-  
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -87,6 +94,27 @@ app.get("/scrape", function(req, res) {
     res.send("Scrape Complete");
   });
 });
+
+// Route for getting all Articles from the db
+app.get("/articles", function(req, res) {
+  // Grab every document in the Articles collection
+  db.Article.find({})
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, render them on the index page
+      // res.json(dbArticle);
+      res.render("index", {article: dbArticle});
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+
+
+
+
+
 
 // Listen on the port
 app.listen(PORT, function() {
