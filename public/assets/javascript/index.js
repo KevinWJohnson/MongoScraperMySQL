@@ -2,6 +2,7 @@ $(document).ready(function() {
   // Whenever someone clicks a Article Notes button
   $(document).on("click", ".article-notes", function() {
     console.log("Article Notes Button Click Works");
+    window.scrollTo(0, 0);
     // Empty the notes from the note section
     $("#notes").empty();
     // Save the id from the button which got it from the article id
