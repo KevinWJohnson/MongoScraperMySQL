@@ -1,3 +1,9 @@
+/*
+body {
+  background-color: lightgray;
+}
+*/
+
 #table-container
 {
   width: 70%;
@@ -21,4 +27,8 @@
 #HomeTitleSub {
   font-size: 30px;
   text-align: center;
+}
+
+#scrapeLink {
+  color: red;
 }
