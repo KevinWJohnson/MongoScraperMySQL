@@ -69,10 +69,10 @@ $(document).ready(function() {
   });
 
   //************************************************ */
-  $(".movie-favorite").on("click", function(e) {
+  $(".article-favorite").on("click", function(e) {
     var movieId = $(this).attr("data-id");
     $.ajax({
-      url: "/api/movie/" + movieId,
+      url: "/articles/" + thisId,
       method: "PUT",
       data: {
         favorite: true
@@ -88,10 +88,10 @@ $(document).ready(function() {
       });
   });
 
-  $(".movie-unfavorite").on("click", function(e) {
+  $(".article-unfavorite").on("click", function(e) {
     var movieId = $(this).attr("data-id");
     $.ajax({
-      url: "/api/movie/" + movieId,
+      url: "/articles/" + thisId,
       method: "PUT",
       data: {
         favorite: false

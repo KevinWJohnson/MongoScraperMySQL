@@ -31,6 +31,11 @@ var ArticleSchema = new Schema({
     type: String,
     trim: true
   },
+  // `favorite` is a Boolean
+  favorite: {
+    type: Boolean,
+    default: false
+},
   
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model

@@ -43,6 +43,12 @@ mongoose.connect(MONGODB_URI);
 
 // Routes
 
+// Route for Homepage
+app.get('/', function (req, res) {
+  res.render('home');
+});
+
+
 // A GET route for scraping the nytimes website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
@@ -111,6 +117,19 @@ app.get("/articles", function(req, res) {
 });
 
 
+// GET all the articles that favorite is set to true
+// and render them to the favorite.handlebars page
+app.get("/favorites", function(req, res) {
+  db.Article.find({ favorite: true})
+    .then(function(ArticleFav){
+      // res.json(data);
+      res.render("favorite", {article: ArticleFav});
+    }).catch(function(err){
+      res.status(404).send(err);
+    });
+});
+
+
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
@@ -149,7 +168,27 @@ app.post("/articles/:id", function(req, res) {
 });
 
 
+// PUT (UPDATE) a article by its _id 
 
+// Will set the article favorite to whatever the value 
+
+// of the req.body.favorite boolean is
+
+app.put("/articles/:id", function(req, res){
+
+  db.Article.findByIdAndUpdate(req.params.id, {favorite: req.body.favorite}, {new: true})
+
+    .then(function(dbArticle){
+
+      res.json(dbArticle);
+
+    }).catch(function(err){
+
+      res.status(400).send(err);
+
+    });
+
+});
 
 
 

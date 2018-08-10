@@ -1,4 +1,4 @@
-<h2>Showing All Articles Page</h2>
+<h2>Showing All Articles</h2>
 <div class="table-responsive" id=table-container>
     <table class="table table-striped">
         <thead>
@@ -9,7 +9,7 @@
                 <th scope="col">Byline</th>
                 <th scope="col">Link</th>
                 <th scope="col">Article Notes</th>
-                <th scope="col">Delete from Saved</th>
+                <th scope="col">Favorite the Article</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
                     <button class="article-notes" data-id={{this._id}}>Article Notes</button>
                 </td>
                 <td>
-                    <button class="article-delete" data-id={{this._id}}>Delete from Saved</button>
+                    <button class="article-favorite" data-id={{this._id}}>Favorite the Article</button>
                 </td>
             </tr>
             {{/each}}
