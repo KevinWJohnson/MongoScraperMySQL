@@ -73,16 +73,7 @@ app.get("/scrape", function(req, res) {
       result.byline = $(element)
         .children("p.byline")
         .text();
-      // console.log(
-      //   " title: " +
-      //     title +
-      //     " link: " +
-      //     link +
-      //     " summary: " +
-      //     summary +
-      //     " byline: " +
-      //     byline
-      // );
+    
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
@@ -169,9 +160,7 @@ app.post("/articles/:id", function(req, res) {
 
 
 // PUT (UPDATE) a article by its _id 
-
 // Will set the article favorite to whatever the value 
-
 // of the req.body.favorite boolean is
 
 app.put("/articles/:id", function(req, res){
