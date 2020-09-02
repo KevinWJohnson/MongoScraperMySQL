@@ -55,29 +55,25 @@ app.get("/scrape", function(req, res) {
   axios.get("https://www.nytimes.com/section/world").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
-    
+
     // Now, we grab every story-body class within the div, and do the following:
-    $("article").each(function(i, element) {
+    $("div.story-body").each(function(i, element) {
       var result = {};
       result.title = $(element)
-        .children("div")
-        .children("h2")
+        .children("h2.headline")
         .children("a")
         .text();
       result.link = $(element)
-        .children("div")
-        .children("h2")
+        .children("h2.headline")
         .children("a")
         .attr("href");
       result.summary = $(element)
-        .children("div")
-        .children("p")
-        .html();
-      result.byline = $(element)
-        .children("div")
-        .children("p")
-        .children("span")
+        .children("p.summary")
         .text();
+      result.byline = $(element)
+        .children("p.byline")
+        .text();
+    
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
