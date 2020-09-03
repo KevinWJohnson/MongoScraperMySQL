@@ -35,12 +35,6 @@ app.use(bodyParser.json());
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 
-// If deployed, use the deployed database. Otherwise use the local newsScrape database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScrape";
-
-// Connect to the Mongo DB
-mongoose.connect(MONGODB_URI);
-
 // Routes
 
 // Route for Homepage
@@ -81,9 +75,15 @@ app.get("/scrape", function(req, res) {
 
       // Create a new Article using the `result` object built from scraping
       db.article.create(result)
-        .then(dbArticle =>  console.log(dbArticle))
-        .catch(err => res.status(422).json(err))
-    });
+        .then(function(dbArticle) {
+          // View the added result in the console
+          console.log(dbArticle);
+        })
+        .catch(function(err) {
+          // If an error occurred, send it to the client
+          return res.json(err);
+        });
+      });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
     res.send("Scrape Complete");
@@ -193,6 +193,8 @@ app.put("/articles/:id", function(req, res){
 
 
 // Listen on the port
-app.listen(PORT, function() {
-  console.log("Listening on port: " + PORT);
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("Listening on port: " + PORT);
+  });
 });

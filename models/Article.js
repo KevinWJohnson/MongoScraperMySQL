@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   article.associate = function(models) {
-    article.belongsTo(models.note, {foreignKey: 'id', as: 'note'})
+    article.belongsTo(models.note, {foreignKey: 'id', as: 'noteId'})
   };
 
   return article;
