@@ -3,7 +3,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                {{!-- <th scope="col">_id</th> --}}
+                {{!-- <th scope="col">id</th> --}}
                 <th scope="col">Title</th>
                 <th scope="col">Summary</th>
                 <th scope="col">Byline</th>
@@ -15,16 +15,16 @@
         <tbody>
             {{#each article}}
             <tr>
-                {{!-- <td>{{this._id}}</td> --}}
+                {{!-- <td>{{this.id}}</td> --}}
                 <td class="maxTitle">{{this.title}}</td>
                 <td class="maxSummary">{{this.summary}}</td>
                 <td class="maxByline">{{this.byline}}</td>
                 <td class="maxLink">{{this.link}}</td>
                 <td>
-                    <button class="article-notes" data-id={{this._id}}>Article Notes</button>
+                    <button class="article-notes" data-id={{this.id}}>Article Notes</button>
                 </td>
                 <td>
-                    <button class="article-unfavorite" data-id={{this._id}}>Unfavorite the Article</button>
+                    <button class="article-unfavorite" data-id={{this.id}}>Unfavorite the Article</button>
                 </td>
             </tr>
             {{/each}}

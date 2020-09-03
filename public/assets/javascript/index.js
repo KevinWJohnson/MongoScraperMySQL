@@ -24,7 +24,7 @@ $(document).ready(function() {
         $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Enter Note Here'></textarea>");
         // A button to submit a new note, with the id of the article saved to it
         $("#notes").append(
-          "<button data-id='" + data._id + "' id='savenote'>Save Note</button>"
+          "<button data-id='" + data.id + "' id='savenote'>Save Note</button>"
         );
 
 
