@@ -1,5 +1,5 @@
 {
-  "name": "mongoscraper",
+  "name": "mongoscrapermysql",
   "version": "1.0.0",
   "description": "News scraper",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KevinWJohnson/MongoScraper.git"
+    "url": "git+https://github.com/KevinWJohnson/MongoScraperMySQL.git"
   },
   "author": "Kevin Johnson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KevinWJohnson/MongoScraper/issues"
+    "url": "https://github.com/KevinWJohnson/MongoScraperMySQL/issues"
   },
-  "homepage": "https://github.com/KevinWJohnson/MongoScraper#readme",
+  "homepage": "https://github.com/KevinWJohnson/MongoScraperMySQL#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
@@ -24,6 +24,8 @@
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.2.7",
     "morgan": "^1.9.0",
-    "request": "^2.87.0"
+    "mysql2": "^2.1.0",
+    "request": "^2.87.0",
+    "sequelize": "^6.3.5"
   }
 }

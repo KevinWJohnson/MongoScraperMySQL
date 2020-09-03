@@ -1,19 +1,22 @@
-var mongoose = require("mongoose");
-
-// Save a reference to the Schema constructor
-var Schema = mongoose.Schema;
-
-// Using the Schema constructor, create a new NoteSchema object
-// This is similar to a Sequelize model
-var NoteSchema = new Schema({
-  // `title` is of type String
-  title: String,
-  // `body` is of type String
-  body: String
-});
-
-// This creates our model from the above schema, using mongoose's model method
-var Note = mongoose.model("Note", NoteSchema);
-
-// Export the Note model
-module.exports = Note;
+module.exports = function(sequelize, DataTypes) {
+  var note = sequelize.define("note", {
+      id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+          defaultValue: DataTypes.UUIDV4,
+          primaryKey: true
+      },
+      title: {
+          type: DataTypes.STRING,
+      },
+      body: {
+          type: DataTypes.STRING,
+      },
+      createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW
+      }
+  });
+  return note;
+};
