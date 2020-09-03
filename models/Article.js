@@ -28,11 +28,7 @@ module.exports = function(sequelize, DataTypes) {
           defaultValue: false
       },
       note: {
-        type: DataTypes.UUID,
-        references: {         // article belongsTo note 1:n
-          model: 'note',
-          key: 'id'
-        }
+        type: DataTypes.UUID
       },
       createdAt: {
           type: DataTypes.DATE,
@@ -40,5 +36,10 @@ module.exports = function(sequelize, DataTypes) {
           defaultValue: DataTypes.NOW
       }
   });
+
+  article.associate = function(models) {
+    article.belongsTo(models.note, {foreignKey: 'id', as: 'note'})
+  };
+
   return article;
 };
