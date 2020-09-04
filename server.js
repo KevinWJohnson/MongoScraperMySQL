@@ -72,7 +72,8 @@ app.get("/scrape", function(req, res) {
         .children("p")
         .children("span")
         .text();
-
+        console.log("Article Result:");
+        console.log(result);
       // Create a new Article using the `result` object built from scraping
       db.article.create(result)
         .then(function(dbArticle) {
@@ -83,7 +84,7 @@ app.get("/scrape", function(req, res) {
           // If an error occurred, send it to the client
           return res.json(err);
         });
-      });
+    });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
     res.send("Scrape Complete");
