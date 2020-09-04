@@ -9,12 +9,10 @@ module.exports = function(sequelize, DataTypes) {
       title: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true
       },
       link: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       summary: {
           type: DataTypes.STRING,

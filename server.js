@@ -72,8 +72,8 @@ app.get("/scrape", function(req, res) {
         .children("p")
         .children("span")
         .text();
-        console.log("Article Result:");
-        console.log(result);
+        //console.log("Article Result:");
+        //console.log(result);
       // Create a new Article using the `result` object built from scraping
       db.article.create(result)
         .then(function(dbArticle) {
