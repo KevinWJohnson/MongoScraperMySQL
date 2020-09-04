@@ -14,8 +14,11 @@ $(document).ready(function() {
       url: "/articles/" + thisId
     })
       // With that done, add the note information to the page
-      .then(function(data) {
-        console.log(data);
+      .then(function(dataArray) {
+        // Sequelize returns an array of objects
+        var data = dataArray[0];
+        //console.log("Article data: " + JSON.stringify(dataArray));
+        //console.log("Article data object: " + JSON.stringify(data));
         // The title of the article
         $("#notes").append("<h2>" + data.title + "</h2>");
         // An input to enter a new title
