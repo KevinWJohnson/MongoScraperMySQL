@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.BOOLEAN,
           defaultValue: false
       },
-      note: {
+      noteID: {
         type: DataTypes.UUID
       },
       createdAt: {

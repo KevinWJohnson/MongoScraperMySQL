@@ -143,6 +143,24 @@ app.get("/articles/:id", function(req, res) {
     });
 });
 
+// Route for grabbing a specific Article by id, populate it with it's note
+app.get("/notes/:id", function(req, res) {
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.note.findAll({
+                  where: {
+                    id: req.params.id
+                  }
+    })
+    .then(function(dbNote) {
+      // If we were able to successfully find an Note with the given id, send it back to the client
+      res.json(dbNote);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
@@ -151,7 +169,7 @@ app.post("/articles/:id", function(req, res) {
       // If a Note was created successfully, find one Article with an `id` equal to `req.params.id`. 
       // Update the Article to be associated with the new Note
      
-      return (db.article.update({ note: dbNote.id }, {
+      return (db.article.update({ noteID: dbNote.id }, {
         where: {
           id: req.params.id
         }

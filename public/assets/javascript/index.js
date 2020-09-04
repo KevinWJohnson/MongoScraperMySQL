@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Whenever someone clicks a Article Notes button
   $(document).on("click", ".article-notes", function() {
-    console.log("Article Notes Button Click Works");
+    //console.log("Article Notes Button Click Works");
     window.scrollTo(0, 0);
     // Empty the notes from the note section
     $("#notes").empty();
@@ -32,12 +32,26 @@ $(document).ready(function() {
 
 
         
-        // If there's a note in the article
-        if (data.note) {
-          // Place the title of the note in the title input
-          $("#titleinput").val(data.note.title);
-          // Place the body of the note in the body textarea
-          $("#bodyinput").val(data.note.body);
+        // If there's a noteID in the article
+        if (data.noteID) {
+
+          // Now make an ajax call for the Note
+          $.ajax({
+            method: "GET",
+            url: "/notes/" + data.noteID
+          })
+          // With that done, add the note information to the page
+          .then(function(dataNotesArray) {
+            // Sequelize returns an array of objects
+            var dataNotes = dataNotesArray[0];
+            //console.log("Note data: " + JSON.stringify(dataNotesArray));
+            //console.log("Note data object: " + JSON.stringify(dataNotes));
+
+            // Place the title of the note in the title input
+            $("#titleinput").val(dataNotes.title);
+            // Place the body of the note in the body textarea
+            $("#bodyinput").val(dataNotes.body);
+          })
         }
       });
   });
@@ -61,7 +75,7 @@ $(document).ready(function() {
       // With that done
       .then(function(data) {
         // Log the response
-        console.log(data);
+        //console.log(data);
         // Empty the notes section
         $("#notes").empty();
       });
