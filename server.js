@@ -94,10 +94,51 @@ app.get("/scrape", function(req, res) {
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
-  db.article.findAll()
+  db.article.findAll({
+    order: [
+        ['updatedAt', 'DESC'],
+        ['createdAt', 'DESC'],
+        ['id', 'DESC']
+    ]
+  })
+    .then(function(dbArticle) {
+    // Limit the number of articles in the database
+        var articleLimit = 200;
+        var counter = 0;
+        dbArticle.forEach((story) => {
+          counter++;
+          if (counter > articleLimit) {
+            db.note
+                  .destroy({
+                        where: {
+                          id: story.noteID
+                        }
+                  })
+              .then(() => {
+                db.article
+                    .destroy({
+                          where: {
+                            id: story.id
+                          }
+                    })
+              })
+          }
+        })
+        return dbArticle;
+  })
+    .then(function(dbArticle) {
+      return (db.article.findAll({
+        order: [
+            ['updatedAt', 'DESC'],
+            ['createdAt', 'DESC'],
+            ['id', 'DESC']
+        ]
+      }));
+  })
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, render them on the index page
       // res.json(dbArticle);
+      //console.log("After 2nd the find all - dbArticle: " + JSON.stringify(dbArticle));
       res.render("index", {article: dbArticle});
     })
     .catch(function(err) {
@@ -105,6 +146,7 @@ app.get("/articles", function(req, res) {
       res.json(err);
     });
 });
+
 
 
 // GET all the articles that favorite is set to true
