@@ -123,4 +123,21 @@ $(document).ready(function() {
         alert(err);
       });
   });
+
+
+  //************************************************ */
+  $(".article-delete").on("click", function(e) {
+    var ArticleId = $(this).attr("data-id");
+    $.ajax({
+      method: "POST",
+      url: "/articlesRemove/" + ArticleId,
+      data: {id: ArticleId}
+    })
+      .then(function(data) {
+        location.reload();
+      })
+      .catch(function(err) {
+        alert(err);
+      });
+  });
 });

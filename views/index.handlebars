@@ -10,6 +10,7 @@
                 <th scope="col">Link</th>
                 <th scope="col">Article Notes</th>
                 <th scope="col">Favorite the Article</th>
+                <th scope="col">Delete the Article</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                 </td>
                 <td>
                     <button class="article-favorite" data-id={{this.id}}>Favorite the Article</button>
+                </td>
+                <td>
+                    <button class="article-delete" data-id={{this.id}}>Delete the Article</button>
                 </td>
             </tr>
             {{/each}}
